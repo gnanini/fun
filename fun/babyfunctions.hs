@@ -65,9 +65,35 @@ nullGuard xs  | length xs > 0 = True
 -- tá errado
 safetailPattern :: [a] -> [a]
 safetailPattern xs = (\True -> tail xs) (nullPattern xs)
-safetailPattern xs = (\False -> [])     (nullPattern xs)
+safetailPattern xs = (\False -> xs) (nullPattern xs)
+--safetailPattern xs = (\False -> xs) (nullPattern xs)
 
 
 nullPattern :: [a] -> Bool
 nullPattern []  = False
 nullPattern (_)  = True
+
+isPrime k = if [x | x <- [2..(k-1)], k `mod` x == 0] == [] && k /= 1 then True else False
+
+primes k = [x | x <- [2..(k-1)], isPrime x]
+
+-- esse gera o fatorial final
+fatorial' :: Integer -> Integer
+fatorial' k = product [x | x <- [1..k]]
+
+
+-- esse gera uma lista de fatoriais
+fatorial :: Integer -> [Integer]
+fatorial k = map fatorial' [1..k]
+
+
+-- daqui pra baixo é fullstackoverflow
+fibonacci :: Int -> [Int]
+fibonacci k = take k (1 : 1 : zipWith (+) fibs (tail fibs))
+
+fibs :: [Int]
+fibs = 1 : 1 : zipWith (+) fibs (tail fibs)
+
+--fibo :: Integer, Integer -> [Integer]
+fibo a b = a:fibo b (a+b)
+
