@@ -47,11 +47,11 @@ metade xs =
 
 
 safetail :: [a] -> [a]
-safetail xs = if (Main.null xs) == True then tail xs else []
+safetail xs = if (null' xs) == True then tail xs else []
 
-null :: [a] -> Bool --define se uma lista é vazia ou não
+null' :: [a] -> Bool --define se uma lista é vazia ou não
 --usando condicionais
-null xs = if length xs > 0 then True else False
+null' xs = if length xs > 0 then True else False
 
 
 safetailGuard :: [a] -> [a]
@@ -71,20 +71,27 @@ safetailPattern xs = (\False -> xs) (nullPattern xs)
 
 nullPattern :: [a] -> Bool
 nullPattern []  = False
-nullPattern (_)  = True
+nullPattern _  = True
 
-isPrime k = if [x | x <- [2..(k-1)], k `mod` x == 0] == [] && k /= 1 then True else False
+isPrime :: Integral a => a -> Bool
+isPrime k = null ([x | x <- [2..(k-1)], k `mod` x == 0]) -- && k /= 1)
+-- isPrime k = if [x | x <- [2..(k-1)], k `mod` x == 0] == [] && k /= 1 then True else False
 
+primes :: Integral a => a -> [a]
 primes k = [x | x <- [2..(k-1)], isPrime x]
 
 -- esse gera o fatorial final
-fatorial' :: Integer -> Integer
-fatorial' k = product [x | x <- [1..k]]
+fat :: Integer -> Integer
+fat k = product  [1..k]
 
 
 -- esse gera uma lista de fatoriais
-fatorial :: Integer -> [Integer]
-fatorial k = map fatorial' [1..k]
+fatList :: Integer -> [Integer]
+fatList k = map fatorial [1..k]
+
+fatorial :: Integer -> Integer
+fatorial 0 = 1
+fatorial n = n * fatorial(n-1)
 
 
 -- daqui pra baixo é fullstackoverflow
