@@ -63,9 +63,9 @@ nullGuard xs  | length xs > 0 = True
               | otherwise     = False
 
 -- tá errado
-safetailPattern :: [a] -> [a]
-safetailPattern xs = (\True -> tail xs) (nullPattern xs)
-safetailPattern xs = (\False -> xs) (nullPattern xs)
+--safetailPattern :: [a] -> [a]
+--safetailPattern xs = (\True -> tail xs) (nullPattern xs)
+--safetailPattern xs = (\False -> xs) (nullPattern xs)
 --safetailPattern xs = (\False -> xs) (nullPattern xs)
 
 
@@ -74,7 +74,7 @@ nullPattern []  = False
 nullPattern _  = True
 
 isPrime :: Integral a => a -> Bool
-isPrime k = null ([x | x <- [2..(k-1)], k `mod` x == 0]) -- && k /= 1)
+isPrime k = null ([x | x <- [2..(k`div`2+1)], k `mod` x == 0]) -- && k /= 1)
 -- isPrime k = if [x | x <- [2..(k-1)], k `mod` x == 0] == [] && k /= 1 then True else False
 
 primes :: Integral a => a -> [a]
@@ -109,8 +109,15 @@ teams (x:y:xs) = (x:(recurl), (y:recurr))
  
 
 headTeams :: ([a], [a]) -> [a]
-headTeams x:_ = x
+headTeams ([x],[y]) = [x,y]
+headTeams ((x:xs),(y:ys)) = (x:y:recursion)
+        where recursion = headTeams (xs,ys)
 
+
+--geraPrimos :: Integer -> [Integer]
+--geraPrimos [] = []
+--geraPrimos 1  = []
+--geraPrimos k  = 
 
 -- daqui pra baixo é fullstackoverflow
 fibonacci :: Int -> [Int]
