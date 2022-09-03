@@ -93,6 +93,24 @@ fatorial :: Integer -> Integer
 fatorial 0 = 1
 fatorial n = n * fatorial(n-1)
 
+junta :: a -> b -> (a, b)
+junta x y = (x,y)
+
+
+somaDuplos :: Num a => (a, a) -> a
+somaDuplos (x,y) = x + y
+
+
+teams :: [a] -> ([a],[a])
+teams (x:[]) = ([], [x])
+teams [x,y] = ([x],[y])
+teams (x:y:xs) = (x:(recurl), (y:recurr))
+        where (recurr, recurl) = teams xs
+ 
+
+headTeams :: ([a], [a]) -> [a]
+headTeams x:_ = x
+
 
 -- daqui pra baixo é fullstackoverflow
 fibonacci :: Int -> [Int]
