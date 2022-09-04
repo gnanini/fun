@@ -114,10 +114,35 @@ headTeams ((x:xs),(y:ys)) = (x:y:recursion)
         where recursion = headTeams (xs,ys)
 
 
---geraPrimos :: Integer -> [Integer]
+geraPrimos :: Integer -> [Integer]
+geraPrimos k
+         | k <= 1 = []
+         | x <= k && naoDiv x (xs++[x]) = xs
+            where x = 2
+                  xs = [2]
+
+--        | k < 2 = []
+--        | k `div` 2 == 1       = [k]
+--        | k `mod` (k `div` 2) == 0 = 
 --geraPrimos [] = []
---geraPrimos 1  = []
---geraPrimos k  = 
+--geraPrimos k
+--        | k <= 1 = []
+--        | k == 2 = 2
+--        | k `mod` geraPrimos (k - 1) == 0 = []
+--        | otherwise
+
+
+
+-- retorna True se [x..]  ¬ divisível por k
+naoDiv :: Integer -> [Integer] -> Bool
+naoDiv _ [0] = True
+naoDiv k [x]
+        | x `mod` k /= 0 = True
+naoDiv k (x:xs)
+        | x `mod` k == 0 = False
+        | otherwise = naoDiv k xs
+
+
 
 -- daqui pra baixo é fullstackoverflow
 fibonacci :: Int -> [Int]
