@@ -29,12 +29,13 @@ instance Show Bool where
     show False = "Falso"
     show _     = "Verdadeiro"
 
---instance Enum Bool where
+instance Enum Bool where
 
---    toEnum False = [False, True]
---    toEnum _     = [True, False]
---
---    fromEnum  False = [True, False]
+    toEnum False = [True, False]
+    toEnum True  = [False, True]
+
+    fromEnum  False = [False, True]
+    fromEnum  True  = [True, False]
 
 -- conjunction (AND)
 (&&) :: Bool -> Bool -> Bool
