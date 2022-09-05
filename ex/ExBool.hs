@@ -31,11 +31,17 @@ instance Show Bool where
 
 instance Enum Bool where
 
-    toEnum False = [True, False]
-    toEnum True  = [False, True]
+--    toEnum False = [True, False]
+--    toEnum True  = [False, True]
+--
+--    fromEnum  False = [False, True]
+--    fromEnum  True  = [True, False]
+    toEnum 0 = False
+    toEnum 1 = True
+    toEnum _ = True
 
-    fromEnum  False = [False, True]
-    fromEnum  True  = [True, False]
+    fromEnum False = 0
+    fromEnum True  = 1
 
 -- conjunction (AND)
 (&&) :: Bool -> Bool -> Bool
