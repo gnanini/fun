@@ -77,8 +77,10 @@ isPrime :: Integral a => a -> Bool
 isPrime k = null ([x | x <- [2..(k`div`2+1)], k `mod` x == 0]) -- && k /= 1)
 -- isPrime k = if [x | x <- [2..(k-1)], k `mod` x == 0] == [] && k /= 1 then True else False
 
+
 primes :: Integral a => a -> [a]
 primes k = [x | x <- [2..(k-1)], isPrime x]
+
 
 -- esse gera o fatorial final
 fat :: Integer -> Integer
