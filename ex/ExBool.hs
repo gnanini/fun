@@ -33,7 +33,8 @@ instance Enum Bool where
 
     toEnum 0 = False
     toEnum 1 = True
-    toEnum _ = undefined
+    toEnum _ = error "mais que 1 não rola"
+
 
     fromEnum False = 0
     fromEnum True  = 1

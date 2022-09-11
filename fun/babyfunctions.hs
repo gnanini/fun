@@ -147,6 +147,7 @@ naoDiv k (x:xs)
 
 
 -- daqui pra baixo é fullstackoverflow
+-- deixei aqui pra dar uma olhada depois
 fibonacci :: Int -> [Int]
 fibonacci k = take k (1 : 1 : zipWith (+) fibs (tail fibs))
 
