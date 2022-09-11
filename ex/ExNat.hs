@@ -101,21 +101,21 @@ odd (Succ (Succ x)) = odd x
 (<*>) _ Zero        = Zero
 (<*>) x (Succ Zero) = x
 (<*>) (Succ Zero) x = x
-(<*>) x (Succ y)    = ((<*>) x y <+> x)
+(<*>) x (Succ y)    = (<*>) x y <+> x
 
 -- exponentiation
 (<^>) :: Nat -> Nat -> Nat
 (<^>) Zero _        = Zero
-(<^>) _ Zero        = (Succ Zero)
+(<^>) _ Zero        = Succ Zero
 (<^>) x (Succ Zero) = x
-(<^>) (Succ Zero) x = (Succ Zero)
-(<^>) x (Succ y)    = (((<^>) x y) <*> x)
+(<^>) (Succ Zero) x = Succ Zero
+(<^>) x (Succ y)    = ((<^>) x y) <*> x
 
 -- quotient
 (</>) :: Nat -> Nat -> Nat
 (</>) Zero _        = Zero 
 (</>) x  y
-       | y <= x = (Succ ((</>) (x <-> y) y))
+       | y <= x = Succ ((</>) (x <-> y) y)
        | otherwise = Zero
 
 -- remainder
@@ -141,13 +141,13 @@ absDiff x y
 (|-|) = absDiff
 
 factorial :: Nat -> Nat
-factorial Zero     = (Succ Zero)
+factorial Zero     = Succ Zero
 factorial (Succ x) = (Succ x) <*> (factorial x) 
 
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
 sg Zero = Zero
-sg _    = (Succ Zero)
+sg _    = Succ Zero
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
@@ -165,11 +165,11 @@ lo base n
 
 toNat :: Integral a => a -> Nat
 toNat 0   = Zero
-toNat x = (Succ (toNat (x - 1)))
+toNat x = Succ (toNat (x - 1))
 
 fromNat :: Integral a => Nat -> a
 fromNat Zero     = 0
-fromNat (Succ x) = (1 + (fromNat (x)))
+fromNat (Succ x) = 1 + (fromNat (x))
 
 
 -- Obs: we can now easily make Nat an instance of Num.
