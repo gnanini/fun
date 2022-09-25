@@ -21,8 +21,25 @@ import qualified Data.Char as C
 -- C.toUpper :: Char -> Char
 -- You MUST NOT use ANY of these in your code
 
+
+data ListInt = Empty | Cons Int ListInt
+--    deriving (P.Show)
+
+instance P.Show ListInt where
+    show (Cons x Empty) = "Cons " ++ show x
+    show (Cons x xs)    = show x ++ show (Cons xs)
+
+--    show x = "[" ++ show' x ++ "]"
+--
+--show' :: ListInt -> [Char]
+--show' Empty          = "[]"
+--show' (Cons x Empty) = show x
+--show' (Cons x xs)    = show x ++ "," ++ show' xs
+
+
+
 head :: [a] -> a
-head = undefined
+head (x:xs) = x
 
 tail :: [a] -> [a]
 tail = undefined
