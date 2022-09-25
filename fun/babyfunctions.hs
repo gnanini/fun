@@ -1,3 +1,7 @@
+import Data.Char
+
+
+
 iseven :: Integral a => a -> Bool
 iseven n = n `mod` 2 == 0
 
@@ -82,6 +86,22 @@ primes :: Integral a => a -> [a]
 primes k = [x | x <- [2..(k-1)], isPrime x]
 
 
+--geraPrimos :: Int -> [Int]
+--geraPrimos 0 = []
+--geraPrimos 1 = []
+--geraPrimos k
+--         | k `divisivel` 
+--         where ks = [2 .. k]
+         
+
+
+divisivel :: Int -> Int -> Bool
+divisivel _ 0 = False
+divisivel x y 
+        | x `mod` y == 0 = True
+        | otherwise = False
+
+
 -- esse gera o fatorial final
 fat :: Integer -> Integer
 fat k = product  [1..k]
@@ -144,6 +164,26 @@ naoDiv k (x:xs)
         | x `mod` k == 0 = False
         | otherwise = naoDiv k xs
 
+
+reverse' :: [a] -> [a]
+reverse' []     = []
+reverse' (x:xs) = (reverse' xs) ++ [x]
+
+
+crazy :: [a] -> [a]
+crazy (x:y:xs) = y:xs ++ [x]
+
+
+scream :: [Char] -> [Char]
+scream []   = "!!!"
+scream (x:xs)
+     | isLower x = chr (ord x - 32) : scream xs
+     | otherwise = x : scream xs
+
+
+squareAll :: [Int] -> [Int]
+squareAll []   = []
+squareAll (x:xs) = x * x : squareAll xs
 
 
 -- daqui pra baixo é fullstackoverflow
