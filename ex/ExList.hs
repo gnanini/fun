@@ -164,24 +164,55 @@ subsequences (x:xs) = inits (x:xs) ++ subsequences xs
 
 
 -- any --incompleta
-any :: Foldable t => (a -> Bool) -> t a -> Bool --copiei do :type
-any [] = False
+any :: (a -> Bool) -> [a] -> Bool
+any f []               = False
+any f [x]              = f x
 any f (x:xs)
+        | f x == True  = True 
+        | otherwise    = any f xs
 
 
 -- all
+all :: (a -> Bool) -> [a] -> Bool
+all f []               = True
+all f [x]              = f x
+all f (x:xs)
+        | f x == False = False 
+        | otherwise    = all f xs
 
 -- and
+and :: Bool -> Bool -> Bool
+and True True = True
+and _ _       = False
+
+
 -- or
+or :: Bool -> Bool -> Bool
+or False False = False
+or _ _         = True
 
 -- concat
+concat :: [[a]] -> [a]
+--concat :: P.Foldable t => t [a] -> [a]
+concat [[]]   = []
+concat [x]    = x
+concat (x:xs) = x ++ (concat xs)
 
 -- elem using the funciton 'any' above
+elem :: (Eq a) => a -> [a] -> Bool  
+elem x xs = any (== x) xs
 
 -- elem': same as elem but elementary definition
 -- (without using other functions except (==))
+elem' :: (Eq a) => a -> [a] -> Bool  
+elem' _ []           = False
+elem' x (y:ys)
+        | x == y    = True
+        | otherwise = elem x ys
 
 -- (!!)
+(!!) :: [a] -> Int -> a
+(!!) xs x = undefined    
 
 -- filter
 -- map
