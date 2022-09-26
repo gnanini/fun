@@ -22,13 +22,17 @@ import qualified Data.Char as C
 -- You MUST NOT use ANY of these in your code
 
 
-data ListInt = Empty | Cons Int ListInt
+--data ListInt = Empty | Cons Int ListInt
 --    deriving (P.Show)
-
-instance P.Show ListInt where
-    show (Cons x Empty) = "Cons " ++ show x
-    show (Cons x xs)    = show x ++ show (Cons xs)
-
+--
+--instance P.Show ListInt where
+--    show Empty          = "[]"
+--    show (Cons x Empty) = "[" ++ (show'' x) ++ "]"
+--    show (Cons x xs)    = "[" ++ (show'' x) ++ (show xs)
+--        where
+--            show'' :: Int -> Char
+--            show'' x = show x
+--
 --    show x = "[" ++ show' x ++ "]"
 --
 --show' :: ListInt -> [Char]
@@ -42,25 +46,33 @@ head :: [a] -> a
 head (x:xs) = x
 
 tail :: [a] -> [a]
-tail = undefined
+tail (x:xs) = xs
 
 null :: [a] -> Bool
-null = undefined
+null [] = True
+null _  = False
 
 length :: Integral i => [a] -> i
-length = undefined
+length []     = 0
+length (x:xs) = 1 + length xs
 
 sum :: Num a => [a] -> a
-sum = undefined
+sum []        = 0
+sum (x:xs)    = x + sum xs
 
 product :: Num a => [a] -> a
-product = undefined
+product []     = error "Deu ruim"
+product [x]    = x
+product (x:xs) = x * product xs
 
 reverse :: [a] -> [a]
-reverse = undefined
+reverse []     = []
+reverse (x:xs) = reverse xs ++ [x]
 
 (++) :: [a] -> [a] -> [a]
-(++) = undefined
+(++) xs []     = xs
+(++) [] ys     = ys
+(++) (x:xs) ys = x : (++) xs ys
 
 -- right-associative for performance!
 -- (what?!)
@@ -68,10 +80,11 @@ infixr 5 ++
 
 -- (snoc is cons written backwards)
 snoc :: a -> [a] -> [a]
-snoc = undefined
+snoc k []      = [k]
+snoc k (x:xs)  = x : snoc k xs
 
 (<:) :: [a] -> a -> [a]
-(<:) = flip snoc
+(<:) xs x = snoc x xs
 
 -- different implementation of (++)
 (+++) :: [a] -> [a] -> [a]
@@ -83,22 +96,79 @@ xs +++ (y:ys) = (xs +++ [y]) +++ ys
 -- (hmm?)
 infixl 5 +++
 
--- minimum :: Ord a => [a] -> a
--- maximum :: Ord a => [a] -> a
+minimum :: Ord a => [a] -> a
+minimum []          = error "vazio não tem mínimo"
+minimum [x]         = x
+minimum (x:y:[])
+        | x < y     = x
+        | x > y     = y
+        | x == y    = x
+minimum (x:y:xs)
+        | x < y     = minimum (x:xs)
+        | x > y     = minimum (y:xs)
+        | x == y    = minimum (x:xs)
+
+
+maximum :: Ord a => [a] -> a
+maximum []          = error "vazio não tem máximo"
+maximum [x]         = x
+maximum (x:y:[])
+        | x > y     = x
+        | x < y     = y
+        | x == y    = x
+maximum (x:y:xs)
+        | x > y     = maximum (x:xs)
+        | x < y     = maximum (y:xs)
+        | x == y    = maximum (x:xs)
 
 -- take
+take :: Int -> [a] -> [a]
+take _ []     = error "Lista vazia"
+take 0 _      = []
+take 1 (y:ys) = [y]
+take x (y:ys) = y : take (x-1) ys
+
+
 -- drop
+drop :: Int -> [a] -> [a]
+drop 0 y      = y
+drop k (x:xs) =  drop (k-1) xs
+
 
 -- takeWhile
 -- dropWhile
 
 -- tails
+tails :: [a] -> [[a]]
+tails []     = [[]]
+tails (x:xs) = (x:xs) : tails xs
+
+
 -- init
+init :: [a] -> [a]
+init []     = error "dá certo não, abestado!!"
+init [x]    = []
+init (x:xs) = x : init xs
+
+
 -- inits
+inits :: [a] -> [[a]]
+inits [x] = [[], [x]]
+inits xs  = inits (init xs) ++ [xs] 
+
 
 -- subsequences
+subsequences :: [a] -> [[a]]
+subsequences [x]    = inits [x]
+subsequences (x:xs) = inits (x:xs) ++ subsequences xs
 
--- any
+
+-- any --incompleta
+any :: Foldable t => (a -> Bool) -> t a -> Bool --copiei do :type
+any [] = False
+any f (x:xs)
+
+
 -- all
 
 -- and
@@ -144,8 +214,11 @@ infixl 5 +++
 -- transpose
 
 -- checks if the letters of a phrase form a palindrome (see below for examples)
-palindrome :: String -> Bool
-palindrome = undefined
+--palindrome :: String -> Bool
+--palindrome [] = True 
+--palindrome x
+--         | take (length x / 2) x == drop (length x / 2) = True
+--         | otherwise                                    = False
 
 {-
 
