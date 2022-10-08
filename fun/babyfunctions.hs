@@ -194,6 +194,8 @@ fibonacci k = take k (1 : 1 : zipWith (+) fibs (tail fibs))
 fibs :: [Int]
 fibs = 1 : 1 : zipWith (+) fibs (tail fibs)
 
---fibo :: Integer, Integer -> [Integer]
-fibo a b = a:fibo b (a+b)
 
+--essa eu fiz
+fat' :: Int -> Int
+fat' 0 = 1
+fat' n = n * (fat' (n-1))
