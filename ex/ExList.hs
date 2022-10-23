@@ -179,8 +179,8 @@ inits xs  = inits (init xs) ++ [xs]
 
 
 subsequences :: [a] -> [[a]]
-subsequences [x]    = inits [x]
-subsequences (x:xs) = inits (x:xs) ++ subsequences xs
+subsequences []     = [[]]
+subsequences (x:xs) = subsequences xs ++ map ([x]++) (subsequences xs)
 
 
 any :: (a -> Bool) -> [a] -> Bool
